@@ -1,0 +1,8 @@
+[package]
+name = "asset-deploy"
+version = "0.1.0"
+authors = ["Can Bülbül <can@orkestra.co>"]
+
+[dependencies]
+
+image = "0.7.0"
