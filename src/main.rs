@@ -5,7 +5,7 @@ use std::path::Path;
 use std::env;
 
 use image::GenericImage;
-use image::FilterType::CatmullRom;
+use image::FilterType::Nearest;
 
 fn main() {
 	let path = match env::args().nth(1) {
@@ -29,11 +29,8 @@ fn main() {
 	let v: Vec<&str> = path.split(".").collect();
 	let w: Vec<&str> = v[0].split("@").collect();
 	let basename = w[0];
-	if w.len()<2 {
-		  //create @3x image if not exists
-			println!("Warning: cannot infer scale, assuming @3x.");
-		  let path3x = String::from(basename) + "@3x.png";
-			create_image(path3x, img.clone());
+	if w.len()<2 || w[1] != "3x" {
+			return;
 	}
 
   //create image paths
@@ -41,8 +38,8 @@ fn main() {
 	let path1x = String::from(basename) +    ".png";
 
   //create images
-	create_image(path2x, img.clone().resize(width*2/3, height*2/3,CatmullRom));
-	create_image(path1x, img.clone().resize(width*1/3, height*1/3,CatmullRom));
+	create_image(path2x, img.clone().resize(width*2/3, height*2/3,Nearest));
+	create_image(path1x, img.clone().resize(width*1/3, height*1/3,Nearest));
 	println!("done.");
 }
 
