@@ -8,13 +8,20 @@ use image::GenericImage;
 use image::FilterType::Nearest;
 
 fn main() {
-	let path = match env::args().nth(1) {
-	  None => {
-			println!("Error: invalid path!");
-			return;
-		},
-		Some(val) => val,
-	};
+	let mut args = env::args();
+	args.next(); //blank call for 0th argument
+	loop {
+		match args.next() {
+			Some(arg) => read_image_file(arg),
+			None => {
+				println!("done.");
+				return;
+			}
+		}
+	}
+}
+
+fn read_image_file(path: String) {
 
   let img = match image::open(&Path::new(&path)) {
 	  Result::Err(_) => {
@@ -33,6 +40,8 @@ fn main() {
 			return;
 	}
 
+	println!("asset: {}",path);
+
   //create image paths
 	let path2x = String::from(basename) + "@2x.png";
 	let path1x = String::from(basename) +    ".png";
@@ -40,7 +49,7 @@ fn main() {
   //create images
 	create_image(path2x, img.clone().resize(width*2/3, height*2/3,Nearest));
 	create_image(path1x, img.clone().resize(width*1/3, height*1/3,Nearest));
-	println!("done.");
+	println!("\n");
 }
 
 fn create_image(path: String, img: image::DynamicImage) {
