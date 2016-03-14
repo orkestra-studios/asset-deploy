@@ -43,9 +43,11 @@ fn main() {
   //create images
 	create_image(path2x, img.clone().resize(width*2/3, height*2/3,CatmullRom));
 	create_image(path1x, img.clone().resize(width*1/3, height*1/3,CatmullRom));
+	println!("done.");
 }
 
 fn create_image(path: String, img: image::DynamicImage) {
   let ref mut fout = File::create(&Path::new(&path)).unwrap();
   let _ = img.clone().save(fout, image::PNG).unwrap();
+	println!("created: {}", path);
 }	
