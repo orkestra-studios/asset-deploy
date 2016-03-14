@@ -49,7 +49,7 @@ fn read_image_file(path: String) {
   //create images
 	create_image(path2x, img.clone().resize(width*2/3, height*2/3,Nearest));
 	create_image(path1x, img.clone().resize(width*1/3, height*1/3,Nearest));
-	println!("\n");
+	println!("");
 }
 
 fn create_image(path: String, img: image::DynamicImage) {
