@@ -1,6 +1,6 @@
 [package]
 name = "fovea"
-version = "0.6.2"
+version = "0.6.4"
 authors = ["Can Bülbül <can@orkestra.co>"]
 
 [dependencies]
