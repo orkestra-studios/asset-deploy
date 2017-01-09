@@ -37,10 +37,7 @@ fn read_image_file(path_str: &str) -> Result<(), String> {
     let path = Path::new(path_str);
     let err_to_string = |e| format!("{}", e);
 
-    let stem = match path.file_stem() {
-        Some(name) => name,
-        None => return Err(format!("Can't get file basename from '{}'", path_str)),
-    };
+    let stem = path.file_stem().ok_or(format!("Can't get file basename from '{}'", path_str))?;
 
     let w: Vec<&str> =
         stem.to_str().ok_or(format!("Can't convert to unicode string"))?.split('@').collect();
