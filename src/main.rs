@@ -1,12 +1,14 @@
 #[macro_use]
 extern crate clap;
 extern crate image;
+extern crate rayon;
 
 use std::fs::File;
 use std::path::Path;
 
 use image::GenericImage;
 use image::FilterType;
+use rayon::prelude::*;
 
 // ripgrep's eprintln macro
 macro_rules! eprintln {
@@ -22,11 +24,11 @@ fn main() {
         (@arg FILES: +required +multiple "files")
     ).get_matches();
 
-    let files = matches.values_of("FILES").unwrap();
+    let files: Vec<_> = matches.values_of("FILES").unwrap().collect();
 
-    for file in files {
-        read_image_file(file).unwrap_or_else(|e| eprintln!("Warning file '{}': {}", file, e));
-    }
+    files.par_iter().for_each(|f| {
+        read_image_file(f).unwrap_or_else(|e| eprintln!("Warning file '{}': {}", f, e));
+    });
 
     println!("done.");
 }
