@@ -16,6 +16,6 @@ build-type:          Simple
 cabal-version:       >=1.8
 
 executable macula
-  -- main-is:             
+  main-is: Macula.hs
   -- other-modules:       
-  build-depends:       base ==4.6.*, hip ==1.0.*
+  build-depends:       base ==4.*, hip ==1.5.*

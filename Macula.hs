@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings, PatternGuards #-}
+{-# LANGUAGE OverloadedStrings #-}
 import System.Environment
 import System.IO
 
@@ -22,30 +22,30 @@ getFileProps s = (base, scale, ext)
         scale = takeWhile (/='.') $ dropWhile (/='@') s
 
 makeFileName :: (String, String, String) -> String
-makeFileName (b,s,e) = (b ++ s ++ e)
+makeFileName (b,s,e) = b ++ s ++ e
 
 generate1x :: (String, String) -> IMG -> IO()
 generate1x (b,e) img = do
   putStr $ "  generating " ++ filename ++ "... "
   hFlush stdout
-  let newimg = scale (Bilinear Edge) (1.0/3.0, 1.0/3.0) img 
+  let newimg = scale Bilinear Edge (1.0/3.0, 1.0/3.0) img 
   HIP.writeImage filename newimg
   putStrLn "done."
-  where filename = (makeFileName (b,"",e))
+  where filename = makeFileName (b,"",e)
 
 generate2x :: (String, String) -> IMG -> IO()
 generate2x (b,e) img = do
   putStr $ "  generating " ++ filename ++ "... "
   hFlush stdout
-  let newimg = scale (Bilinear Edge) (2.0/3.0, 2.0/3.0) img 
+  let newimg = scale Bilinear Edge (2.0/3.0, 2.0/3.0) img 
   HIP.writeImage filename newimg
   putStrLn "done."
-  where filename = (makeFileName (b,"@2x",e))
+  where filename = makeFileName (b,"@2x",e)
 
 generateImages :: (String, String, String) -> IO()
 generateImages (b, "@3x", e) = do
   putStrLn $ "convert: " ++ filename
-  img <- HIP.readImageRGBA filename
+  img <- HIP.readImageRGBA VU filename
   generate2x (b,e) img
   generate1x (b,e) img
   putStrLn ""
