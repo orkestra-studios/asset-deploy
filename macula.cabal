@@ -2,8 +2,8 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 name:                macula
-version:             0.5.4
-synopsis:            deploys original asset image(3x) in 1x and 2x sizes for iOS apps.
+version:             0.6.1
+synopsis:            deploy retina(3x) file in 1x and 2x formats for iOS apps.
 -- description:         
 homepage:            orkestra.co/fovea
 license:             GPL-3
